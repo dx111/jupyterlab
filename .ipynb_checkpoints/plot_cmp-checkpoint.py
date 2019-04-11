@@ -52,36 +52,34 @@ def plot_compare(dataset_list,data_label,compare_type,dataset_name,bench_list):
         SG_L1_NN_SPARSITY=[0.45,0.82,0.84,0.49]
         SG_L1_NN_NEURONS=[52.7,30.3,16.0,11.3]
     
-    #color_list=["deeppink","aqua","bisque"]
-    cm = plt.cm.get_cmap('RdYlBu')
-    #color_list = [cm(float(i)/(30)) for i in xrange(30)]
-    marker_list=[".",",","o","v","^","<",">","1","2","3","4","s","p","*","h","H","+","x","d","D","|","_"]
+    color_list=["deeppink","aqua","bisque"]
+    marker_list=["*","v","o"]
     line_list=[">","<","-"]
     bench_label=[]
     show_label=[]
     
     fig=plt.figure(figsize=(8,6))
     for j,dataset in enumerate(dataset_list):
-        #color=color_list[j]
+        color=color_list[j]
         marker=marker_list[j]
         if compare_type=="Feature_selection":
             acc=dataset["val_acc"]
             x=dataset["n1"]
-            h1=plt.scatter(x,acc,cmap=cm,marker=marker,label="1111")
+            h1=plt.scatter(x,acc,c=color,marker=marker,label="1111")
             bench_label.append(h1)
             show_label.append(data_label[j])
 
         elif compare_type=="Hidden_layer_node_pruning":
             acc=dataset["val_acc"]
             x=dataset["n2"]+dataset["n3"]+dataset["n4"]
-            h1=plt.scatter(x,acc,cmap=cm,marker=marker)
+            h1=plt.scatter(x,acc,c=color,marker=marker)
             bench_label.append(h1)
             show_label.append(data_label[j])
 
         elif compare_type=="Sparsity":
             acc=dataset["val_acc"]
             x=dataset["sp1"]+dataset[:]["sp2"]+dataset["sp3"]+dataset["sp4"]
-            h1=plt.scatter(x,acc,cmap=cm,marker=marker)
+            h1=plt.scatter(x,acc,c=color,marker=marker)
             bench_label.append(h1)
             show_label.append(data_label[j])
 
@@ -118,7 +116,7 @@ def plot_compare(dataset_list,data_label,compare_type,dataset_name,bench_list):
         bench_label.append(l3)
         show_label.append("SG_L1")
 
-    plt.legend(handles=bench_label,labels=show_label,loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.legend(handles=bench_label,labels=show_label,loc='best')
     plt.title(compare_type,fontsize=20)
     if compare_type=="Feature_selection":
         plt.xlabel("Total Number of fetures",fontsize=20)
